@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Head from 'next/head';
 
 type NavItemProps = {
   title: string;
@@ -81,6 +82,27 @@ function Footer() {
 export default function Layout({ children }: any) {
   return (
     <>
+      <Head>
+        <link rel="icon" href="favicon.ico" />
+        <title>{children.props.metadata.title}</title>
+        <meta
+          name="description"
+          content={children.props.metadata.description}
+        />
+        <meta property="og:title" content={children.props.metadata.title} />
+        <meta
+          property="og:description"
+          content={children.props.metadata.description}
+        />
+        <meta
+          property="og:image"
+          content={children.props.metadata.openGraph.image}
+        />
+        <meta
+          property="og:title"
+          content={children.props.metadata.openGraph.url}
+        />
+      </Head>
       <Navbar pageId={children.props.pageId} />
       <main> {children}</main>
       <Footer />
