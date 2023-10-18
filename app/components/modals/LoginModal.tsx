@@ -33,6 +33,11 @@ const LoginModal = () => {
     },
   });
 
+  const toggle = useCallback(() => {
+    loginModal.onClose();
+    registerModal.onOpen();
+  }, [registerModal, loginModal]);
+
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     setIsLoading(true);
     signIn('credentials', {
@@ -92,12 +97,12 @@ const LoginModal = () => {
       />
       <div className=" text-neutral-500 text-center mt-4 font-light">
         <div className=" flex flex-row justify-center items-center gap-2">
-          <div>Already have an account?</div>
+          <div>First time using Airbnb?</div>
           <div
-            onClick={loginModal.onClose}
+            onClick={toggle}
             className="text-neutral-800 cursor-pointer hover:underline"
           >
-            Log in
+            Create an aoount
           </div>
         </div>
       </div>

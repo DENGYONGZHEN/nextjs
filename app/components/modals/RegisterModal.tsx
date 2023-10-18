@@ -13,9 +13,11 @@ import Modal from './Modal';
 import Heading from '@/app/components/Heading';
 import Input from '@/app/components/inputs/Input';
 import Button from '@/app/components/Button';
+import useLoginModal from '@/app/hooks/useLoginModal';
 
 const RegisterModal = () => {
-  const { isOpen, onClose } = useRegisterModal();
+  const registerModal = useRegisterModal();
+  const loginModal = useLoginModal();
   const [isLoading, setIsLoading] = useState(false);
 
   const {
@@ -30,12 +32,17 @@ const RegisterModal = () => {
     },
   });
 
+  const toggle = useCallback(() => {
+    loginModal.onOpen();
+    registerModal.onClose();
+  }, [registerModal, loginModal]);
+
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     setIsLoading(true);
     axios
       .post('/api/register', data)
       .then(() => {
-        onClose();
+        registerModal.onClose();
       })
       .catch((error) => {
         toast.error(error.message);
@@ -95,7 +102,7 @@ const RegisterModal = () => {
         <div className=" flex flex-row justify-center items-center gap-2">
           <div>Already have an account?</div>
           <div
-            onClick={onClose}
+            onClick={toggle}
             className="text-neutral-800 cursor-pointer hover:underline"
           >
             Log in
@@ -108,10 +115,10 @@ const RegisterModal = () => {
   return (
     <Modal
       disabled={isLoading}
-      isOpen={isOpen}
+      isOpen={registerModal.isOpen}
       title="Register"
       actionLabel="Continue"
-      onClose={onClose}
+      onClose={registerModal.onClose}
       onSubmit={handleSubmit(onSubmit)}
       body={bodyContent}
       footer={footerContent}
