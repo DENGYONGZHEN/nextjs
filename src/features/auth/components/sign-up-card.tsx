@@ -1,3 +1,4 @@
+"use client";
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
 import { useForm } from "react-hook-form";
@@ -25,7 +26,7 @@ import { registerSchema } from "../schemas";
 import { useRegister } from "../api/use-register";
 
 export const SignUpCard = () => {
-  const { mutate } = useRegister();
+  const { mutate, isPending } = useRegister();
 
   const form = useForm<z.infer<typeof registerSchema>>({
     resolver: zodResolver(registerSchema),
@@ -68,6 +69,7 @@ export const SignUpCard = () => {
                   <FormControl>
                     <Input
                       {...field}
+                      disabled={isPending}
                       type="text"
                       placeholder="Enter your name"
                     />
@@ -84,6 +86,7 @@ export const SignUpCard = () => {
                   <FormControl>
                     <Input
                       {...field}
+                      disabled={isPending}
                       type="email"
                       placeholder="Enter email address"
                     />
@@ -100,6 +103,7 @@ export const SignUpCard = () => {
                   <FormControl>
                     <Input
                       {...field}
+                      disabled={isPending}
                       type="password"
                       placeholder="Enter password"
                     />
@@ -108,7 +112,7 @@ export const SignUpCard = () => {
                 </FormItem>
               )}
             />
-            <Button disabled={false} className="w-full" size="lg">
+            <Button disabled={isPending} className="w-full" size="lg">
               Sign Up
             </Button>
           </form>
@@ -120,7 +124,7 @@ export const SignUpCard = () => {
       <CardContent className="p-7 flex flex-col gap-y-4">
         <Button
           variant="secondary"
-          disabled={false}
+          disabled={isPending}
           size="lg"
           className="w-full"
         >
@@ -129,7 +133,7 @@ export const SignUpCard = () => {
         </Button>
         <Button
           variant="secondary"
-          disabled={false}
+          disabled={isPending}
           size="lg"
           className="w-full"
         >
